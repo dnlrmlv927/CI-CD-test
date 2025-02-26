@@ -1,0 +1,23 @@
+name: Deploy files to server
+
+on:
+  push:
+    branches:
+      - main  # Запуск при пуше в main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+
+      - name: Deploy files to server
+        run: |
+          scp -o StrictHostKeyChecking=no -i private_key.pem -r * danilssau6364@130.193.46.13:~/project_folder/
