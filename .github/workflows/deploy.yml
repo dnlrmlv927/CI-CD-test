@@ -1,4 +1,4 @@
-name: Deploy files to server
+name: Deploy files to Airflow server
 
 on:
   push:
@@ -15,9 +15,11 @@ jobs:
 
       - name: Setup SSH
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
-          chmod 600 private_key.pem
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 130.193.46.13 >> ~/.ssh/known_hosts
 
-      - name: Deploy files to server
+      - name: Deploy files to Airflow folder
         run: |
-          scp -o StrictHostKeyChecking=no -i private_key.pem -r * danilssau6364@130.193.46.13:~/project_folder/
+          rsync -avz --delete ./ danilssau6364@130.193.46.13:~/airflow/
