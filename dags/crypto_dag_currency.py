@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 import traceback
 from modules.miner_currency import CurrencyMiner
 from modules.db_worker import DBWorker
+# sadsd
 
 # Определение дат
 START_DATE = datetime(2025, 1, 1)  # Начало с 1 января 2025
