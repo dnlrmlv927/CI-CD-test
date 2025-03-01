@@ -1,5 +1,5 @@
 import sys
-sys.path.append(r'/opt/airflow')
+sys.path.append(r'/home/danilssau6364/airflow')
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
