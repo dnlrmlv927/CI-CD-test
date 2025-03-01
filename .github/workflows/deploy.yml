@@ -22,4 +22,5 @@ jobs:
 
       - name: Deploy files to Airflow folder
         run: |
-          rsync -avz --delete ./ danilssau6364@130.193.46.13:~/airflow/
+          rsync -avz ./ danilssau6364@130.193.46.13:~/airflow/
+
