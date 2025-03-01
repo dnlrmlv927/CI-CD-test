@@ -2,8 +2,8 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
 import time
-#просто заглушка
-#ddfsdsf
+
+
 
 # Функции для задач
 def print_hello():
