@@ -1,17 +1,16 @@
 import sys
+# Добавляем путь к модулям
+sys.path.append(r'/home/danilssau6364/airflow')
 import requests
 import traceback
 from datetime import datetime, timedelta
-
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.models import Variable  # ⬅️ Импорт Variable для получения Telegram токена
-
 from modules.miner_currency import CurrencyMiner
 from modules.db_worker import DBWorker
 
-# Добавляем путь к модулям
-sys.path.append(r'/home/danilssau6364/airflow')
+
 
 # 🔹 Данные для Telegram
 TELEGRAM_BOT_TOKEN = Variable.get("TELEGRAM_BOT_TOKEN", default_var=None)
