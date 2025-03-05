@@ -68,10 +68,8 @@ DEFAULT_ARGS = {
 miner = CurrencyMiner()
 db = DBWorker()
 
-def mine_data(**kwargs):
+def mine_data(execution_date, **kwargs):
     """Функция для майнинга данных с валютного API."""
-    execution_date = kwargs['ds']
-
     try:
         print(f"Запуск майнинга данных за {execution_date}")
         data = miner.get_crypto_data(since=execution_date)
@@ -80,7 +78,8 @@ def mine_data(**kwargs):
     except Exception as e:
         print(f"❌ Ошибка при майнинге данных за {execution_date}:")
         print(traceback.format_exc())
-        raise e  # <-- Добавлен `raise`, чтобы Airflow понял, что таска упала
+        raise e  # Поднимаем исключение для Airflow
+
 
 # 🔹 Создание DAG
 with DAG(
@@ -89,12 +88,13 @@ with DAG(
         schedule_interval=SCHEDULE_INTERVAL,
         catchup=True,
         tags=['binance', 'crypto'],
-        dagrun_timeout=timedelta(minutes=60),  # <-- Добавлено ограничение на выполнение DAG
+        dagrun_timeout=timedelta(minutes=60),
 ) as dag:
 
     task_mine_currency = PythonOperator(
         task_id='crypto_mine_currency_data',
         python_callable=mine_data,
+        op_kwargs={'execution_date': '{{ ds }}'},  # ⬅️ Передаем дату через макрос
         on_success_callback=send_success_alert,
         on_failure_callback=send_failure_alert
     )

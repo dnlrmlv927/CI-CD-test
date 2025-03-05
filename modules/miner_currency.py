@@ -12,6 +12,7 @@ PROXY_USER = Variable.get('PROXY_USER', default_var='user3726989')
 PROXY_PASSWORD = Variable.get('PROXY_PASSWORD', default_var='PNPvnFsKTg')
 
 
+
 # Если прокси-логин и пароль заданы, формируем словарь прокси
 if PROXY_USER and PROXY_PASSWORD:
     proxy = {
