@@ -2,6 +2,7 @@ import sys
 sys.path.append(r'/home/danilssau6364/airflow')
 from airflow import DAG
 from airflow.operators.python import PythonOperator
+from airflow.models import Variable
 from datetime import datetime, timedelta
 import traceback
 from modules.miner_currency import CurrencyMiner
